@@ -11,6 +11,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nom du user</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Number of Contact</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,6 +20,7 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
+                        <td>{{count($user->contacts)}} contacts</td>
                     </tr>
                     @empty
                     <tr>

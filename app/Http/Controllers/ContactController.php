@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class ContactController extends Controller
 {
@@ -14,7 +18,6 @@ class ContactController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('auth')->only(['index']);
     }
 
     /**
@@ -24,13 +27,13 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts=Contact::all();
+        $contacts=auth()->user()->contacts;
         return view('contacts.index', compact('contacts'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -71,12 +74,12 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contact  $contact
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
+    public function show()
     {
-
+        return $this->index();
     }
 
     /**
@@ -85,9 +88,11 @@ class ContactController extends Controller
      * @param  \App\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contact $contact)
+    public function edit($id)
     {
-        //
+        $contact = Contact::find($id);
+        return view('contacts.edit')
+        ->with('contact', $contact);
     }
 
     /**
@@ -99,7 +104,38 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        
+
+       // $validator = Validator::make($request->all(),[
+       //     'name'=>'[required',
+       //     'tel'=>'required|integer',
+       //     'email'=>'required|email',
+       // ]);
+
+        //if ($isValidate->fails()) {
+        //    return Redirect::to('contacts/' . $id . '/edit')
+        //    ->withErros($validate)
+        //    ->withInput();
+        //}
+        // else{
+        //    
+        //}
+
+        $isValidate =request()->validate([
+            'name' => [],
+            'tel' => [],
+            'email' => [],
+        ]);
+
+        $contact=Contact::find($contact->id);
+
+            $contact->name=$request->get('name');
+            $contact->tel=$request->get('tel');
+            $contact->email=$request->get('email');
+
+            $contact->save();
+
+            return $this->index();
     }
 
     /**
