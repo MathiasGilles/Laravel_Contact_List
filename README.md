@@ -1,5 +1,7 @@
-# Lien des instructions pour l'exercice : 
+# My First Laravel Project
 
-https://docs.google.com/presentation/d/1-4eLLvtsLMdsqpgfXV1n_2BScdg9oUHxIQBZohzSTr0/edit?usp=sharing
+This is a school project
 
+# Warnings
 
+Don't forget to install composer and laravel on your machine or VM
